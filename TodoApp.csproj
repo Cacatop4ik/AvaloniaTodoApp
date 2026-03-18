@@ -23,4 +23,8 @@
         </PackageReference>
         <PackageReference Include="ReactiveUI.Avalonia" Version="11.3.8"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="screenshots\" />
+    </ItemGroup>
 </Project>
