@@ -25,6 +25,7 @@
 - MVVM
 - ReactiveUI
 - JSON
+
 ## Инструкция по запуску
 
 1. Установить **.NET 8 SDK**
@@ -35,6 +36,8 @@
 ```bash
 dotnet restore
 dotnet run
+```
+## Скриншоты
 
 ### 1. Главное окно программы
 ![Главное окно программы](screenshots/main.png)
