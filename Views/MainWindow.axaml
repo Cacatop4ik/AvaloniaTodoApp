@@ -1,0 +1,117 @@
+<Window
+    x:Class="TodoApp.Views.MainWindow"
+    x:Name="RootWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TodoApp.ViewModels"
+    x:DataType="vm:MainWindowViewModel"
+    Width="950"
+    Height="650"
+    MinWidth="700"
+    MinHeight="500"
+    Title="Todo App"
+    RequestedThemeVariant="{Binding CurrentTheme}"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="20">
+        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+            <TextBlock Text="TODO Manager"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+
+            <Button Grid.Column="1"
+                    Content="Сменить тему"
+                    Command="{Binding ToggleThemeCommand}"
+                    Padding="14,8"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Spacing="6">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBox Width="580"
+                         Watermark="Введите новую задачу..."
+                         Text="{Binding NewTaskText, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Content="Добавить"
+                        Command="{Binding AddTaskCommand}"
+                        Padding="18,10"/>
+            </StackPanel>
+
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="Red"
+                       FontSize="13"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    Spacing="10"
+                    Margin="0,16,0,16">
+            <Button Content="Все"
+                    Command="{Binding SetFilterCommand}"
+                    CommandParameter="All"/>
+
+            <Button Content="Активные"
+                    Command="{Binding SetFilterCommand}"
+                    CommandParameter="Active"/>
+
+            <Button Content="Завершенные"
+                    Command="{Binding SetFilterCommand}"
+                    CommandParameter="Completed"/>
+
+            <Button Content="Удалить выбранную"
+                    Command="{Binding DeleteSelectedTaskCommand}"
+                    Margin="20,0,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="3"
+                Background="{DynamicResource ThemeBackgroundBrush}"
+                CornerRadius="12"
+                Padding="10">
+            <ListBox ItemsSource="{Binding FilteredTasks}"
+                     SelectedItem="{Binding SelectedTask}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="12"
+                                Margin="0,0,0,8"
+                                CornerRadius="10"
+                                Background="{DynamicResource ThemeControlLowBrush}">
+                            <Grid ColumnDefinitions="Auto,*,Auto"
+                                  ColumnSpacing="12">
+                                <CheckBox IsChecked="{Binding IsCompleted}"
+                                          VerticalAlignment="Top"
+                                          Margin="0,4,0,0"/>
+
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="{Binding Title}"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"/>
+
+                                    <TextBlock Text="{Binding CreatedAt, StringFormat='Создано: {0:dd.MM.yyyy HH:mm}'}"
+                                               Opacity="0.7"
+                                               FontSize="12"/>
+
+                                    <TextBlock Text="Выполнено"
+                                               Foreground="Green"
+                                               FontSize="12"
+                                               IsVisible="{Binding IsCompleted}"/>
+                                </StackPanel>
+
+                                <Button Grid.Column="2"
+                                        Content="Удалить"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding #RootWindow.DataContext.DeleteTaskCommand}"
+                                        CommandParameter="{Binding}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+    </Grid>
+</Window>

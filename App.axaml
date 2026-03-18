@@ -1,0 +1,26 @@
+<Application
+    x:Class="TodoApp.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    RequestedThemeVariant="Default">
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="Button">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+
+        <Style Selector="TextBox">
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="Border.taskItem">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Background" Value="{DynamicResource ThemeControlLowBrush}"/>
+        </Style>
+    </Application.Styles>
+</Application>
